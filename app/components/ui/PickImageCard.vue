@@ -7,7 +7,7 @@ interface Props {
   title?: string;
 }
 
-const { metaImage = {}, title = "Выбери картинку" } = defineProps<Props>()
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (e: "pick", image: FileDTO): void;
