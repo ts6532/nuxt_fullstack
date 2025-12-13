@@ -1,60 +1,48 @@
 <script setup lang="ts">
-import PickImageModal from "~/components/ui/PickImageModal.vue";
 import PickImageCard from "../../components/ui/PickImageCard.vue";
+import type { FileDTO } from "~~/server/models/file";
 
 definePageMeta({
   layout: "admin",
   middleware: ["auth"],
 });
 
-const { data: settings, refresh } = useAsyncData("settings", () =>
-  $fetch("/api/settings"),
+const { data, refresh } = useAsyncData(
+  "settings",
+  () => $fetch("/api/settings"),
+  {},
 );
+
+const heroImage = computed(() => data.value?.heroImage);
+const aboutImage = computed(() => data.value?.aboutImage);
 
 const isSaving = ref(false);
 
-const overlay = useOverlay();
-
-const modal = overlay.create(PickImageModal);
-
-const pickImage = async (settingsField: "aboutImage" | "heroImage") => {
-  const imagePickingInstance = modal.open();
-
-  const image = await imagePickingInstance.result;
-
-  if (image && settings.value) settings.value[settingsField] = image;
+const pickImage = (field: "heroImage" | "aboutImage", image: FileDTO) => {
+  if (data.value) {
+    const newData = { ...data.value };
+    newData[field] = image;
+    data.value = newData;
+  }
 };
 
 const saveSettings = async () => {
-  if (!settings.value) return;
+  if (!data.value) return;
+
+  isSaving.value = true;
 
   try {
-    isSaving.value = true;
-
     await $fetch("/api/settings", {
       method: "PUT",
       body: {
-        heroImage: settings.value.heroImage,
-        aboutImage: settings.value.aboutImage,
+        heroImage: data.value.heroImage?._id,
+        aboutImage: data.value.aboutImage?._id,
       },
-    });
-
-    useToast().add({
-      title: "Успех",
-      description: "Настройки успешно сохранены",
-      color: "success",
-      icon: "i-heroicons-check-circle",
     });
 
     await refresh();
   } catch (error) {
-    console.error("Error saving settings:", error);
-    useToast().add({
-      title: "Ошибка",
-      description: "Не удалось сохранить настройки",
-      color: "error",
-      icon: "i-heroicons-exclamation-circle",
-    });
+    console.error("Ошибка при сохранении настроек:", error);
   } finally {
     isSaving.value = false;
   }
