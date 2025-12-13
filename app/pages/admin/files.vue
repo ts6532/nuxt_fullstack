@@ -1,64 +1,3 @@
-<template>
-  <UDashboardPanel>
-    <template #header>
-      <UDashboardToolbar>
-        <UModal title="Загрузить файл" fullscreen @after:leave="resetFiles">
-          <UButton icon="i-heroicons-plus" color="primary" variant="solid" />
-
-          <template #body>
-            <UFileUpload
-              class="min-w-96 w-fit m-auto"
-              icon="i-lucide-image"
-              multiple
-              v-model="files"
-              label="Бросай картинки сюда"
-              description="PNG, JPG or WEBP (max. 5MB)"
-              :disabled="isUploading"
-              :ui="{ file: 'h-60' }"
-            />
-          </template>
-          <template #footer="{ close }">
-            <UButton
-              @click="uploadFiles()"
-              :loading="isUploading"
-              :disabled="isUploading || files.length === 0"
-            >
-              {{ isUploading ? "Загрузка..." : "Загрузить" }}
-            </UButton>
-
-            <UButton @click="close" :disabled="isUploading"> Отмена </UButton>
-          </template>
-        </UModal>
-      </UDashboardToolbar>
-    </template>
-
-    <template #body>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        <div v-for="file in filesList" :key="file._id" class="relative group">
-          <UTooltip :text="`${file.filename}`" :popper="{ placement: 'top' }">
-            <img
-              :src="file.path"
-              :alt="file.filename"
-              class="w-full h-40 object-cover rounded-lg shadow-sm"
-            />
-          </UTooltip>
-          <div
-            class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-amber-50 rounded"
-          >
-            <UButton
-              icon="i-heroicons-trash"
-              color="error"
-              variant="ghost"
-              size="sm"
-              @click="deleteFileWithConfirmation(file._id)"
-            />
-          </div>
-        </div>
-      </div>
-    </template>
-  </UDashboardPanel>
-</template>
-
 <script setup lang="ts">
 import ConfirmationModal from "~/components/ui/ConfirmationModal.vue";
 
@@ -81,7 +20,7 @@ const {
   {
     default: () => [],
     watch: [],
-  }
+  },
 );
 
 const overlay = useOverlay();
@@ -202,5 +141,66 @@ const uploadFiles = async () => {
   }
 };
 </script>
+
+<template>
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardToolbar>
+        <UModal title="Загрузить файл" fullscreen @after:leave="resetFiles">
+          <UButton icon="i-heroicons-plus" color="primary" variant="solid" />
+
+          <template #body>
+            <UFileUpload
+              class="min-w-96 w-fit m-auto"
+              icon="i-lucide-image"
+              multiple
+              v-model="files"
+              label="Бросай картинки сюда"
+              description="PNG, JPG or WEBP (max. 5MB)"
+              :disabled="isUploading"
+              :ui="{ file: 'h-60' }"
+            />
+          </template>
+          <template #footer="{ close }">
+            <UButton
+              @click="uploadFiles()"
+              :loading="isUploading"
+              :disabled="isUploading || files.length === 0"
+            >
+              {{ isUploading ? "Загрузка..." : "Загрузить" }}
+            </UButton>
+
+            <UButton @click="close" :disabled="isUploading"> Отмена </UButton>
+          </template>
+        </UModal>
+      </UDashboardToolbar>
+    </template>
+
+    <template #body>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        <div v-for="file in filesList" :key="file._id" class="relative group">
+          <UTooltip :text="`${file.filename}`" :popper="{ placement: 'top' }">
+            <img
+              :src="file.path"
+              :alt="file.filename"
+              class="w-full h-40 object-cover rounded-lg shadow-sm"
+            />
+          </UTooltip>
+          <div
+            class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-amber-50 rounded"
+          >
+            <UButton
+              icon="i-heroicons-trash"
+              color="error"
+              variant="ghost"
+              size="sm"
+              @click="deleteFileWithConfirmation(file._id)"
+            />
+          </div>
+        </div>
+      </div>
+    </template>
+  </UDashboardPanel>
+</template>
 
 <style scoped></style>

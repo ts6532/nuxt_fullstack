@@ -1,41 +1,3 @@
-<template>
-  <UDashboardPanel class="py-6">
-    <template #header>
-      <UDashboardToolbar>
-        <template #right>
-          <UButton
-            icon="i-heroicons-check"
-            color="primary"
-            variant="solid"
-            :loading="isSaving"
-            @click="saveSettings"
-          >
-            Сохранить
-          </UButton>
-        </template>
-      </UDashboardToolbar>
-    </template>
-
-    <UContainer>
-      <div class="flex flex-row flex-nowrap gap-6">
-        <div class="w-1/2">
-          <PickImageCard
-            :meta-image="settings?.heroImage"
-            title="Картинка на главной в самом верху"
-          />
-        </div>
-
-        <div class="w-1/2">
-          <PickImageCard
-            :meta-image="settings?.aboutImage"
-            title="Картинка обо мне"
-          />
-        </div>
-      </div>
-    </UContainer>
-  </UDashboardPanel>
-</template>
-
 <script setup lang="ts">
 import PickImageModal from "~/components/ui/PickImageModal.vue";
 import PickImageCard from "../../components/ui/PickImageCard.vue";
@@ -98,3 +60,43 @@ const saveSettings = async () => {
   }
 };
 </script>
+
+<template>
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardToolbar>
+        <UButton
+          icon="i-heroicons-check"
+          color="primary"
+          variant="solid"
+          :loading="isSaving"
+          @click="saveSettings"
+        >
+          Сохранить
+        </UButton>
+      </UDashboardToolbar>
+    </template>
+
+    <template #body>
+      <UContainer>
+        <div class="flex flex-row flex-nowrap gap-6">
+          <div class="w-1/2">
+            <PickImageCard
+              :metaImage="heroImage"
+              title="Картинка на главной в самом верху"
+              @pick="(image) => pickImage('heroImage', image)"
+            />
+          </div>
+
+          <div class="w-1/2">
+            <PickImageCard
+              :meta-image="aboutImage"
+              title="Картинка обо мне"
+              @pick="(image) => pickImage('aboutImage', image)"
+            />
+          </div>
+        </div>
+      </UContainer>
+    </template>
+  </UDashboardPanel>
+</template>

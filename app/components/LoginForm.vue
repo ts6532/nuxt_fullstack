@@ -1,14 +1,3 @@
-<template>
-  <div>
-    <UAuthForm
-      :schema="authSchema"
-      :fields="fields"
-      icon="i-lucide-lock"
-      @submit="onSubmit"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 const { successRedirectUrl = "/admin/settings" } = defineProps<{
   successRedirectUrl?: string;
@@ -16,7 +5,6 @@ const { successRedirectUrl = "/admin/settings" } = defineProps<{
 
 import type { AuthFormField, FormSubmitEvent } from "@nuxt/ui";
 import { authSchema, type AuthSchema } from "#shared/schemas/authSchema";
-
 
 const fields: AuthFormField[] = [
   {
@@ -49,7 +37,6 @@ const onSubmit = async ({ data }: FormSubmitEvent<AuthSchema>) => {
     await refreshSession();
     await navigateTo(successRedirectUrl);
   } catch ({ data }: any) {
-
     toast.add({
       title: "Error",
       description: data?.message,
@@ -58,5 +45,16 @@ const onSubmit = async ({ data }: FormSubmitEvent<AuthSchema>) => {
   }
 };
 </script>
+
+<template>
+  <div>
+    <UAuthForm
+      :schema="authSchema"
+      :fields="fields"
+      icon="i-lucide-lock"
+      @submit="onSubmit"
+    />
+  </div>
+</template>
 
 <style scoped></style>
