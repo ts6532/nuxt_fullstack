@@ -177,28 +177,30 @@ const uploadFiles = async () => {
     </template>
 
     <template #body>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        <div v-for="file in filesList" :key="file._id" class="relative group">
-          <UTooltip :text="`${file.filename}`" :popper="{ placement: 'top' }">
-            <img
-              :src="file.path"
-              :alt="file.filename"
-              class="w-full h-40 object-cover rounded-lg shadow-sm"
-            />
-          </UTooltip>
-          <div
-            class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-amber-50 rounded"
-          >
-            <UButton
-              icon="i-heroicons-trash"
-              color="error"
-              variant="ghost"
-              size="sm"
-              @click="deleteFileWithConfirmation(file._id)"
-            />
+      <UContainer>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          <div v-for="file in filesList" :key="file._id" class="relative group">
+            <UTooltip :text="`${file.filename}`" :popper="{ placement: 'top' }">
+              <img
+                :src="file.path"
+                :alt="file.filename"
+                class="w-full h-40 object-cover rounded-lg shadow-sm"
+              />
+            </UTooltip>
+            <div
+              class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-amber-50 rounded"
+            >
+              <UButton
+                icon="i-heroicons-trash"
+                color="error"
+                variant="ghost"
+                size="sm"
+                @click="deleteFileWithConfirmation(file._id)"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </UContainer>
     </template>
   </UDashboardPanel>
 </template>
