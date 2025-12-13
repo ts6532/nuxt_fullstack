@@ -1,27 +1,31 @@
+<script setup lang="ts">
+const { data: settings } = useAsyncData(
+  "settings",
+  () => $fetch("/api/settings"),
+  {
+    getCachedData: (key, nuxtApp) =>
+      nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
+  },
+);
+</script>
+
 <template>
-  <header class="header">
-    <nav class="header__nav">
-      <NuxtLink to="/" class="header__brand">My Portfolio</NuxtLink>
+  <section
+    v-if="settings?.heroImage?.path"
+    class="max-sm:hidden w-full flex justify-center pt-10 pb-20"
+  >
+    <UColorModeImage
+      class="max-w-96 max-h-80"
+      :dark="settings.heroImage.path"
+      :light="settings.heroImage.path"
+    />
+  </section>
+
+  <header class="px-6 py-4 border-b border-gray-200">
+    <nav class="flex items-center gap-4 max-sm:justify-center">
+      <NuxtLink to="/" class="font-bold">My Portfolio</NuxtLink>
+      <NuxtLink to="/about" class="font-bold">About me</NuxtLink>
+      <NuxtLink to="/contacts" class="font-bold">Contact</NuxtLink>
     </nav>
   </header>
 </template>
-
-<style scoped>
-.header {
-  padding: 16px 24px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.header__nav {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.header__brand {
-  font-weight: 700;
-  text-decoration: none;
-  color: inherit;
-}
-</style>
-
