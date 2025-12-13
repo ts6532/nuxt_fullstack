@@ -31,13 +31,15 @@
 import PickImageModal from "~/components/ui/PickImageModal.vue";
 import type { FileDTO } from "~~/server/models/file";
 
-const { metaImage: FileDTO = {}, title = "Выбери картинку" } = defineProps<{
+interface Props {
   metaImage?: FileDTO;
   title?: string;
-}>();
+}
+
+const { metaImage = {}, title = "Выбери картинку" } = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: "onPick", image: FileDTO): void;
+  (e: "pick", image: FileDTO): void;
 }>();
 
 const overlay = useOverlay();
@@ -48,7 +50,7 @@ const pickImage = async () => {
   const imagePickingInstance = modal.open();
 
   const image = await imagePickingInstance.result;
-
-  if (image) emit("onPick", image);
+  console.log("Picked image:", image);
+  if (image) emit("pick", image);
 };
 </script>
