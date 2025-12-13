@@ -10,7 +10,7 @@
       <template v-if="metaImage?.path">
         <img
           :src="metaImage.path"
-          alt="About Image Preview"
+          alt="Image Preview"
           class="w-full h-full object-cover"
         />
       </template>
