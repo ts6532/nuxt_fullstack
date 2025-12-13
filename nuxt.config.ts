@@ -25,4 +25,8 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
   modules: ["nuxt-auth-utils", "@nuxt/ui", "@nuxt/content"],
+
+  experimental: {
+    payloadExtraction: true,
+  },
 });
