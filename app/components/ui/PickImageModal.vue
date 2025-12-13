@@ -6,8 +6,8 @@ const emit = defineEmits<{
 }>();
 
 const { data } = useAsyncData("images", () => $fetch("/api/uploads"), {
-  getCachedData: (key) =>
-    useNuxtApp().payload.data[key] ?? useNuxtApp().static.data[key],
+  getCachedData: (key, nuxtApp) =>
+    nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
 });
 
 const handleSelect = (image: FileDTO) => {
@@ -22,7 +22,7 @@ const handleSelect = (image: FileDTO) => {
     fullscreen
   >
     <template #body>
-      <div class="flex flex-wrap gap-4 p-4 ">
+      <div class="flex flex-wrap gap-4 p-4">
         <div
           v-for="image in data"
           :key="image._id"
@@ -35,7 +35,3 @@ const handleSelect = (image: FileDTO) => {
     </template>
   </UModal>
 </template>
-
-<style scoped>
-/* Дополнительные стили при необходимости */
-</style>
