@@ -17,6 +17,8 @@ logs
 .DS_Store
 .fleet
 .idea
+.kilocode
+.codeassistant
 
 # Local env files
 .env
