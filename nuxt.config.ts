@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
     "@nuxt/ui",
     "@nuxt/image",
+    "nuxt-tiptap-editor",
   ],
 
   experimental: {
