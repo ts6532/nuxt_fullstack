@@ -1,22 +1,7 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from "@nuxt/ui";
+import { useAdminNav } from '~/composables/useAdminNav';
 
-const route = useRoute();
-
-const navItems = computed<NavigationMenuItem[]>(() => [
-  {
-    label: "Общие настройки",
-    icon: "i-heroicons-cog-6-tooth",
-    to: "/admin/settings",
-    active: route.path === "/admin/settings",
-  },
-  {
-    label: "Фаилы",
-    icon: "i-heroicons-folder",
-    to: "/admin/files",
-    active: route.path === "/admin/files",
-  },
-]);
+const { navItems } = useAdminNav();
 </script>
 
 <template>

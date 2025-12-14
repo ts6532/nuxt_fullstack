@@ -1,33 +1,29 @@
 <script setup lang="ts">
-import PickImageCard from "../../components/PickImageCard.vue";
-import type { FileDTO } from "~~/server/models/file";
+import type { PopulatedSettingsDTO } from "~~/server/models/settings";
 
 definePageMeta({
   layout: "admin",
   middleware: ["auth"],
 });
 
-const { data, refresh } = useAsyncData(
+const { data, refresh } = useAsyncData<PopulatedSettingsDTO>(
   "settings",
   () => $fetch("/api/settings"),
   {},
 );
 
-const heroImage = computed(() => data.value?.heroImage);
-const aboutImage = computed(() => data.value?.aboutImage);
+const settings = ref<PopulatedSettingsDTO | null>(null);
+
+watchEffect(() => {
+  if (data.value) {
+    settings.value = { ...data.value };
+  }
+});
 
 const isSaving = ref(false);
 
-const pickImage = (field: "heroImage" | "aboutImage", image: FileDTO) => {
-  if (data.value) {
-    const newData = { ...data.value };
-    newData[field] = image;
-    data.value = newData;
-  }
-};
-
 const saveSettings = async () => {
-  if (!data.value) return;
+  if (!settings.value) return;
 
   isSaving.value = true;
 
@@ -35,8 +31,9 @@ const saveSettings = async () => {
     await $fetch("/api/settings", {
       method: "PUT",
       body: {
-        heroImage: data.value.heroImage?._id,
-        aboutImage: data.value.aboutImage?._id,
+        heroImage: settings.value.heroImage?._id,
+        aboutImage: settings.value.aboutImage?._id,
+        aboutText: settings.value.aboutText,
       },
     });
 
@@ -66,22 +63,28 @@ const saveSettings = async () => {
     </template>
 
     <template #body>
-      <UContainer>
+      <UContainer v-if="settings">
         <div class="flex flex-row flex-nowrap gap-6">
           <div class="w-1/2">
-            <PickImageCard
-              :metaImage="heroImage"
-              title="Картинка на главной в самом верху"
-              @pick="(image) => pickImage('heroImage', image)"
-            />
+            <UFormField label="Картинка на главной в самом верху">
+              <PickImageCard v-model:metaImage="settings.heroImage" />
+            </UFormField>
           </div>
 
           <div class="w-1/2">
-            <PickImageCard
-              :meta-image="aboutImage"
-              title="Картинка обо мне"
-              @pick="(image) => pickImage('aboutImage', image)"
-            />
+            <UFormField label="Картинка обо мне">
+              <PickImageCard v-model:metaImage="settings.aboutImage" />
+            </UFormField>
+          </div>
+        </div>
+
+        <div class="flex flex-row flex-nowrap gap-6 my-6">
+          <div class="w-1/2"></div>
+
+          <div class="w-1/2">
+            <UFormField label="Текст на странице обо мне">
+              <TiptapEditor v-model:content="settings.aboutText" />
+            </UFormField>
           </div>
         </div>
       </UContainer>

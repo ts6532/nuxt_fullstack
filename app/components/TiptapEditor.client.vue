@@ -30,7 +30,6 @@ onBeforeUnmount(() => {
 
 <template>
   <div v-if="editor" class="border border-gray-200 rounded-lg overflow-hidden">
-    <!-- Toolbar -->
     <TiptapToolbar :editor="editor" />
 
     <TiptapEditorContent :editor="editor" class="p-4 pl-6 min-h-64 size-full" />
@@ -38,7 +37,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-/* Basic editor styles */
 .tiptap {
   outline: none;
   height: 100%;

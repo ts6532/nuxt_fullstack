@@ -7,8 +7,6 @@ const { data: settings } = useAsyncData(
       nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
   },
 );
-
-const data = ref("some text");
 </script>
 
 <template>
@@ -23,7 +21,7 @@ const data = ref("some text");
         />
       </div>
 
-      <div class="shrink-0 min-lg:w-1/2"></div>
+      <div class="shrink-0 min-lg:w-1/2">Some text</div>
     </div>
   </UContainer>
 </template>
