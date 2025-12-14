@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage("uploads");
   
   const path = await getRouterParam(event, "path");
-  console.log(path)
+
   if (!path) {
     throw createError({
       statusCode: 400,
