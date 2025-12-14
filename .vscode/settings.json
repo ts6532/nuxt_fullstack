@@ -13,6 +13,8 @@
     "heroicons",
     "lucide",
     "nuxtdotjs",
+    "scule",
+    "tiptap",
     "залогинимся"
   ],
   "postman.settings.dotenv-detection-notification-visibility": false

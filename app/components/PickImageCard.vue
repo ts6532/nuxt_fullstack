@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PickImageModal from "~/components/ui/PickImageModal.vue";
+import PickImageModal from "~/components/PickImageModal.vue";
 import type { FileDTO } from "~~/server/models/file";
 
 interface Props {
