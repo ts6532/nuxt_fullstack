@@ -19,6 +19,7 @@ logs
 .idea
 .kilocode
 .codeassistant
+.vscode
 
 # Local env files
 .env
