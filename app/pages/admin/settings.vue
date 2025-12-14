@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PickImageCard from "../../components/ui/PickImageCard.vue";
+import PickImageCard from "../../components/PickImageCard.vue";
 import type { FileDTO } from "~~/server/models/file";
 
 definePageMeta({
