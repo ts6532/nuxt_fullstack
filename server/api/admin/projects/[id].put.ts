@@ -16,6 +16,8 @@ interface UpdateProjectDTO {
 
 type ProjectData = UpdateProjectDTO & { slug?: string };
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   try {
     const id = getRouterParam(event, "id");
 
@@ -25,7 +27,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody<UpdateProjectDTO>(event);
 
     const data: ProjectData = { ...body };
-    
+
     if (data.title) {
       data.slug = generateSlug(data.title);
     }

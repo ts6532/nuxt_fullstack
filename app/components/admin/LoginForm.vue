@@ -29,7 +29,7 @@ const toast = useToast();
 
 const onSubmit = async ({ data }: FormSubmitEvent<AuthSchema>) => {
   try {
-    await $fetch("/api/login", {
+    await $fetch("/api/admin/login", {
       method: "POST",
       body: data,
     });

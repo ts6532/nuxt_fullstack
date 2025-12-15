@@ -1,6 +1,8 @@
 import FileModel from "~~/server/models/file";
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   try {
     const files = await FileModel.find().lean().exec();
 

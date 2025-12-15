@@ -1,10 +1,10 @@
 <template>
   <div class="layout">
-    <UiHeader />
+    <Header />
     <main class="layout__content">
       <slot />
     </main>
-    <UiFooter />
+    <Footer />
   </div>
 </template>
 

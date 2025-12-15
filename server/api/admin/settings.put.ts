@@ -8,7 +8,10 @@ interface UpdateSettingsBody {
   aboutText?: string;
 }
 
-async function validateFileId(fileId: string, fieldName: string): Promise<void> {
+async function validateFileId(
+  fileId: string,
+  fieldName: string,
+): Promise<void> {
   if (!mongoose.Types.ObjectId.isValid(fileId)) {
     throw createError({
       statusCode: 400,
@@ -28,7 +31,7 @@ async function validateFileId(fileId: string, fieldName: string): Promise<void> 
 async function updateFileField(
   settings: any,
   fileId: string | undefined,
-  fieldName: string
+  fieldName: string,
 ): Promise<void> {
   if (fileId) {
     await validateFileId(fileId, fieldName);
@@ -37,12 +40,14 @@ async function updateFileField(
 }
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   try {
     const body: UpdateSettingsBody = await readBody(event);
     const { heroImage, aboutImage, aboutText } = body;
 
     // Validate aboutText if provided
-    if (aboutText !== undefined && typeof aboutText !== 'string') {
+    if (aboutText !== undefined && typeof aboutText !== "string") {
       throw createError({
         statusCode: 400,
         statusMessage: "Поле aboutText должно быть строкой",
@@ -56,8 +61,8 @@ export default defineEventHandler(async (event) => {
     }
 
     // Update fields
-    await updateFileField(settings, heroImage, 'heroImage');
-    await updateFileField(settings, aboutImage, 'aboutImage');
+    await updateFileField(settings, heroImage, "heroImage");
+    await updateFileField(settings, aboutImage, "aboutImage");
 
     if (aboutText !== undefined) {
       settings.aboutText = aboutText;
@@ -72,8 +77,12 @@ export default defineEventHandler(async (event) => {
       data: settings,
     };
   } catch (error: unknown) {
-    const statusCode = error instanceof Error && 'statusCode' in error ? error.statusCode : 500;
-    const statusMessage = error instanceof Error && 'statusMessage' in error ? error.statusMessage : "Ошибка при обновлении настроек";
+    const statusCode =
+      error instanceof Error && "statusCode" in error ? error.statusCode : 500;
+    const statusMessage =
+      error instanceof Error && "statusMessage" in error
+        ? error.statusMessage
+        : "Ошибка при обновлении настроек";
 
     throw createError({
       statusCode: statusCode as number,

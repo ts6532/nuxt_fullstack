@@ -16,22 +16,16 @@ const deleteProject = async (id: string) => {
   if (!confirm("Удалить проект?")) return;
 
   try {
-    await $fetch(`/api/projects/${id}`, { method: "DELETE" });
+    await $fetch(`/api/admin/projects/${id}`, { method: "DELETE" });
     await refresh();
   } catch (error) {
     console.error("Ошибка при удалении:", error);
   }
 };
 
-const columns = [
-  { accessorKey: 'title', header: 'Название' },
-  { accessorKey: 'published', header: 'Опубликован' },
-  { accessorKey: 'actions', header: 'Действия' }
-];
-
 const togglePublished = async (project: PopulatedProjectDTO) => {
   try {
-    await $fetch(`/api/projects/${project._id}`, {
+    await $fetch(`/api/admin/projects/${project._id}`, {
       method: "PUT",
       body: { published: !project.published },
     });
@@ -83,6 +77,16 @@ const togglePublished = async (project: PopulatedProjectDTO) => {
               size="sm"
             >
               Редактировать
+            </UButton>
+            <UButton
+              v-if="project.published"
+              :href="`/projects/${project.slug}`"
+              target="_blank"
+              icon="i-heroicons-arrow-top-right-on-square"
+              variant="outline"
+              size="sm"
+            >
+              Просмотр
             </UButton>
             <UButton
               @click="togglePublished(project)"

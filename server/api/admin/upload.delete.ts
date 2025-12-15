@@ -2,6 +2,8 @@ import File from "~~/server/models/file";
 import mongoose from "mongoose";
 
 export default defineEventHandler<{ query: { id: string } }>(async (event) => {
+  await requireUserSession(event);
+
   const id = getQuery(event).id;
 
   if (!id || typeof id !== "string") {
@@ -39,7 +41,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   }
 
   const storage = useStorage("uploads");
-  
+
   // Получаем имя файла из модели по полю filename
   const fileName = fileRecord.filename;
 

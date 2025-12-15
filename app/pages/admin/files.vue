@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ConfirmationModal from "~/components/ui/ConfirmationModal.vue";
+import ConfirmationModal from "~/components/admin/ConfirmationModal.vue";
 
 definePageMeta({
   layout: "admin",
@@ -13,7 +13,7 @@ const {
 } = useAsyncData(
   "files",
   async () => {
-    const response = await $fetch("/api/uploads");
+    const response = await $fetch("/api/admin/uploads");
 
     return response ?? [];
   },
@@ -39,7 +39,7 @@ const deleteFileWithConfirmation = async (fileId: string) => {
 
 const deleteFile = async (fileId: string) => {
   try {
-    const response = await $fetch(`/api/upload?id=${fileId}`, {
+    const response = await $fetch(`/api/admin/upload?id=${fileId}`, {
       method: "DELETE",
     });
 
@@ -87,7 +87,7 @@ const uploadFiles = async () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        await $fetch("/api/upload", {
+        await $fetch("/api/admin/upload", {
           method: "POST",
           body: formData,
           headers: {},

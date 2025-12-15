@@ -2,6 +2,8 @@ import { createError, defineEventHandler } from "h3";
 import ProjectModel from "~~/server/models/project";
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   try {
     const id = getRouterParam(event, "id");
 

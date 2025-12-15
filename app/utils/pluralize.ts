@@ -1,9 +1,3 @@
-/**
- * Universal pluralization function for Russian language
- * @param count - The number to pluralize
- * @param forms - Array of word forms: [singular, few, many]
- * @returns String with correct plural form
- */
 export function pluralize(count: number, forms: [string, string, string]) {
   const cases = [2, 0, 1, 1, 1, 2];
   const remainder = count % 10;

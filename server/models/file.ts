@@ -2,9 +2,9 @@ import mongoose, { Schema, Types } from "mongoose";
 
 export interface FileDTO {
   _id: string;
-  filename?: string;
-  path?: string;
-  storageType?: string;
+  filename: string;
+  path: string;
+  storageType: string;
 }
 
 const fileSchema = new Schema<FileDTO>({

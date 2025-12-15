@@ -6,10 +6,8 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data, refresh } = useAsyncData<PopulatedSettingsDTO>(
-  "settings",
-  () => $fetch("/api/settings"),
-  {},
+const { data, refresh } = useAsyncData<PopulatedSettingsDTO>("settings", () =>
+  $fetch("/api/settings"),
 );
 
 const settings = ref<PopulatedSettingsDTO | null>(null);
@@ -28,7 +26,7 @@ const saveSettings = async () => {
   isSaving.value = true;
 
   try {
-    await $fetch("/api/settings", {
+    await $fetch("/api/admin/settings", {
       method: "PUT",
       body: {
         heroImage: settings.value.heroImage?._id,

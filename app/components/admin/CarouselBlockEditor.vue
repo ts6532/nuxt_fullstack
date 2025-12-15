@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PickImageModal from "~/components/PickImageModal.vue";
+import PickImageModal from "~/components/admin/PickImageModal.vue";
 import type { FileDTO } from "~~/server/models/file";
 
 const images = defineModel<FileDTO[]>("images");

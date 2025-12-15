@@ -15,6 +15,8 @@ interface CreateProjectDTO {
 }
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   try {
     const body = await readBody<CreateProjectDTO>(event);
 

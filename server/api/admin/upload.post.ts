@@ -1,6 +1,8 @@
 import File from "~~/server/models/file";
 
 export default defineEventHandler(async (event) => {
+  await requireUserSession(event);
+
   const formData = await readMultipartFormData(event);
 
   const file = validateFormDataArray(formData);
@@ -52,7 +54,7 @@ export default defineEventHandler(async (event) => {
     } catch (removeError) {
       console.error(
         `[upload] Ошибка при удалении файла ${fileName} из storage после ошибки MongoDB:`,
-        removeError
+        removeError,
       );
     }
 

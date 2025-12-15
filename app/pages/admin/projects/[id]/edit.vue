@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type {
-  PopulatedProjectDTO,
   PopulatedContentBlockUnion,
+  PopulatedProjectDTO,
 } from "~~/server/models/project";
-import type { FileDTO } from "~~/server/models/file";
 
 const route = useRoute();
 const router = useRouter();
@@ -28,6 +27,7 @@ const projectData = loadedProject.value;
 
 const project = reactive({
   title: projectData.title,
+  slug: projectData.slug,
   description: projectData.description || "",
   tags: [...projectData.tags],
   mainImage: projectData.mainImage,
@@ -59,7 +59,7 @@ const saveProject = async () => {
       }
     });
 
-    await $fetch(`/api/projects/${projectId}`, {
+    await $fetch(`/api/admin/projects/${projectId}`, {
       method: "PUT",
       body: {
         ...project,
@@ -98,13 +98,19 @@ const saveProject = async () => {
 
     <template #body>
       <UContainer>
-        <div class="space-y-6">
-          <UFormField label="Название">
-            <UInput v-model="project.title" />
-          </UFormField>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-row gap-6">
+            <UFormField label="Название">
+              <UInput v-model="project.title" />
+            </UFormField>
+
+            <UFormField label="Alias" hint="то что пишется в строке браузера" :ui="{ hint: 'ml-2'}">
+              <UInput v-model="project.slug" disabled />
+            </UFormField>
+          </div>
 
           <UFormField label="Описание">
-            <UTextarea v-model="project.description" :rows="3" />
+            <UTextarea v-model="project.description" :rows="3" class="w-full"/>
           </UFormField>
 
           <UFormField label="Теги">

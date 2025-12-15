@@ -1,17 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: {
-    enabled: true,
-  },
-
   runtimeConfig: {
     mongoUri: process.env.MONGODB_URI,
   },
+
+  css: ["~/assets/css/main.css"],
 
   routeRules: {
     "/": { redirect: { to: "/home", statusCode: 302 } },
     "/admin/**": { ssr: false },
   },
+
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
 
   nitro: {
     storage: {
@@ -22,14 +27,11 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ["~/assets/css/main.css"],
+  devtools: {
+    enabled: true,
+  },
 
-  modules: [
-    "nuxt-auth-utils",
-    "@nuxt/ui",
-    "@nuxt/image",
-    "nuxt-tiptap-editor",
-  ],
+  modules: ["nuxt-auth-utils", "@nuxt/ui", "@nuxt/image", "nuxt-tiptap-editor"],
 
   experimental: {
     payloadExtraction: true,
