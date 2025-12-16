@@ -7,7 +7,7 @@ definePageMeta({
 });
 
 const { data, refresh } = useAsyncData<PopulatedSettingsDTO>("settings", () =>
-  $fetch("/api/settings"),
+  $fetch("/api/settings"), {}
 );
 
 const settings = ref<PopulatedSettingsDTO | null>(null);

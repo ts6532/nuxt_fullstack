@@ -73,6 +73,15 @@ export interface PopulatedProjectDTO {
   updatedAt: string;
 }
 
+export interface ProjectPreviewDTO {
+  _id: string;
+  title: string;
+  slug: string;
+  description?: string;
+  tags: string[];
+  previewImage?: FileDTO;
+}
+
 const contentBlockSchema = new Schema({
   type: { type: String, required: true }
 }, { discriminatorKey: 'type', _id: true });

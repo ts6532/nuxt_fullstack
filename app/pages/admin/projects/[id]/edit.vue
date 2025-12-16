@@ -17,6 +17,7 @@ const projectId = route.params.id as string;
 const { data: loadedProject } = await useAsyncData<PopulatedProjectDTO>(
   `project-${projectId}`,
   () => $fetch(`/api/admin/projects/${projectId}`),
+  {},
 );
 
 if (!loadedProject.value) {
@@ -104,13 +105,17 @@ const saveProject = async () => {
               <UInput v-model="project.title" />
             </UFormField>
 
-            <UFormField label="Alias" hint="то что пишется в строке браузера" :ui="{ hint: 'ml-2'}">
+            <UFormField
+              label="Alias"
+              hint="то что пишется в строке браузера"
+              :ui="{ hint: 'ml-2' }"
+            >
               <UInput v-model="project.slug" disabled />
             </UFormField>
           </div>
 
           <UFormField label="Описание">
-            <UTextarea v-model="project.description" :rows="3" class="w-full"/>
+            <UTextarea v-model="project.description" :rows="3" class="w-full" />
           </UFormField>
 
           <UFormField label="Теги">

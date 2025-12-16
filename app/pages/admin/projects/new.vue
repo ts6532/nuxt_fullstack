@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { PopulatedProjectDTO, PopulatedContentBlockUnion } from "~~/server/models/project";
 import type { FileDTO } from "~~/server/models/file";
+import type { PopulatedContentBlockUnion } from "~~/server/models/project";
 
 definePageMeta({
   layout: "admin",
@@ -42,7 +42,7 @@ const saveProject = async () => {
       }
     });
 
-    await $fetch('/api/projects', {
+    await $fetch('/api/admin/projects', {
       method: 'POST',
       body: {
         ...project,
