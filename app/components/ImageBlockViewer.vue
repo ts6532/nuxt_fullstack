@@ -5,6 +5,7 @@
       :src="image.path"
       :alt="image.filename || 'Project image'"
       class="w-full rounded-lg shadow-lg"
+      @click="useFullscreen({ image })"
     />
   </div>
 </template>
