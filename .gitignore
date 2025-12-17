@@ -20,7 +20,7 @@ logs
 .kilocode
 .codeassistant
 .vscode
-.\public\uploads\**
+.uploads
 
 # Local env files
 .env
