@@ -17,6 +17,7 @@
     "@nuxt/ui": "^4.2.1",
     "@tiptap/extension-collaboration": "^3.13.0",
     "@tiptap/y-tiptap": "^3.0.1",
+    "@vercel/blob": "^2.0.0",
     "@yeger/vue-masonry-wall": "^5.1.4",
     "cyrillic-to-translit-js": "^3.2.1",
     "lodash": "^4.17.21",

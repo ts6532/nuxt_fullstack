@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     mongoUri: process.env.MONGODB_URI,
     adminLogin: process.env.NUXT_ADMIN_LOGIN,
     adminPassword: process.env.NUXT_ADMIN_PASSWORD,
+    blobToken: process.env.BLOB_READ_WRITE_TOKEN,
   },
 
   css: ["~/assets/css/main.css"],

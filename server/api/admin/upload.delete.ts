@@ -1,8 +1,11 @@
 import File from "~~/server/models/file";
 import mongoose from "mongoose";
+import { del } from "@vercel/blob";
 
 export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   await requireUserSession(event);
+
+  const config = useRuntimeConfig();
 
   const id = getQuery(event).id;
 
@@ -40,17 +43,12 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
     });
   }
 
-  const storage = useStorage("uploads");
-
-  // Получаем имя файла из модели по полю filename
-  const fileName = fileRecord.filename;
-
-  // Удаление файла из storage
+  // Удаление файла из blob storage
   try {
-    await storage.removeItem(fileName);
+    await del(fileRecord.path, { token: config.blobToken });
   } catch (error) {
     // Логируем ошибку, но продолжаем удаление из MongoDB
-    console.error("[upload.delete] Failed to remove file from storage:", error);
+    console.error("[upload.delete] Failed to remove file from blob storage:", error);
     // Не выбрасываем ошибку здесь - всё равно удаляем запись из MongoDB
   }
 
