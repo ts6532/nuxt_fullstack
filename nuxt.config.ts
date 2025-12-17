@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     mongoUri: process.env.MONGODB_URI,
+    adminLogin: process.env.NUXT_ADMIN_LOGIN,
+    adminPassword: process.env.NUXT_ADMIN_PASSWORD,
   },
 
   css: ["~/assets/css/main.css"],
