@@ -1,7 +1,10 @@
 import File from "~~/server/models/file";
+import { put } from "@vercel/blob";
 
 export default defineEventHandler(async (event) => {
   await requireUserSession(event);
+
+  const config = useRuntimeConfig();
 
   const formData = await readMultipartFormData(event);
 
@@ -26,10 +29,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const storage = useStorage("uploads");
   const { filename: fileName, data } = convertedFile;
+  let blob;
   try {
-    await storage.setItemRaw(fileName, file.data);
+    blob = await put(fileName, data, {
+      access: 'public',
+      token: config.blobToken,
+    });
   } catch (error) {
     throw createError({
       statusCode: 500,
@@ -41,8 +47,8 @@ export default defineEventHandler(async (event) => {
   try {
     const fileRecord = new File({
       filename: fileName,
-      path: `/uploads/${fileName}`,
-      storageType: "uploads",
+      path: blob.url,
+      storageType: "blob",
     });
 
     await fileRecord.save();
@@ -50,10 +56,11 @@ export default defineEventHandler(async (event) => {
     return fileRecord._id.toString();
   } catch (error) {
     try {
-      await storage.removeItem(fileName);
+      const { del } = await import("@vercel/blob");
+      await del(blob.url, { token: config.blobToken });
     } catch (removeError) {
       console.error(
-        `[upload] Ошибка при удалении файла ${fileName} из storage после ошибки MongoDB:`,
+        `[upload] Ошибка при удалении файла ${blob.url} из blob после ошибки MongoDB:`,
         removeError,
       );
     }
