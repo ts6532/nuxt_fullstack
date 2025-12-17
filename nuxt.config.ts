@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
   routeRules: {
-    "/": { redirect: { to: "/home", statusCode: 302 } },
+    "/": { redirect: "/home" },
     "/admin/**": { ssr: false },
   },
 

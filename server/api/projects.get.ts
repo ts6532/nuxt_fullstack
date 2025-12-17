@@ -5,18 +5,15 @@ import type { FileDTO } from "~~/server/models/file";
 export default defineEventHandler(async (event) => {
   try {
     const query = getQuery(event);
-    const skip = parseInt(query.skip as string) || 0;
-    const limit = parseInt(query.limit as string) || 12;
+    const skip = Number(query.skip as string) || 0;
+    const limit = Number(query.limit as string) || 6;
 
     const projects = await ProjectModel.find({ published: true })
-      .populate<{ previewImage: FileDTO }>("previewImage")
-      .sort({ order: 1, createdAt: -1 })
-      .skip(skip)
       .limit(limit)
-      .select('_id title slug description tags previewImage')
-      .lean()
+      .skip(skip)
+      .populate<{ previewImage: FileDTO }>("previewImage")
+      .select("_id title slug description tags previewImage")
       .exec();
-
     return projects as ProjectPreviewDTO[];
   } catch (error) {
     throw createError({
