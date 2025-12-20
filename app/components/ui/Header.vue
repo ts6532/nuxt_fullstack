@@ -25,9 +25,8 @@ const { data: settings } = useFetch("/api/settings", {
     <UContainer>
       <div class="flex items-center justify-between">
         <nav class="flex items-center gap-4 max-sm:justify-center">
-          <NuxtLink to="/" class="font-bold">My Portfolio</NuxtLink>
+          <NuxtLink to="/" class="font-bold">Projects</NuxtLink>
           <NuxtLink to="/about" class="font-bold">About me</NuxtLink>
-          <NuxtLink to="/contacts" class="font-bold">Contact</NuxtLink>
         </nav>
 
         <SocialIcons class="max-sm:hidden m-l-auto" />
