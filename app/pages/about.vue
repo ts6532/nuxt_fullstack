@@ -11,8 +11,8 @@ const { data: settings } = useAsyncData(
 
 <template>
   <UContainer>
-    <div class="flex flex-row min-lg:flex-nowrap gap-6">
-      <div class="shrink-0 min-lg:w-1/2 max-w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-start mb-8">
+      <div class="w-full">
         <NuxtImg
           v-if="settings?.aboutImage?.path"
           :src="settings.aboutImage.path"
@@ -21,7 +21,7 @@ const { data: settings } = useAsyncData(
         />
       </div>
 
-      <div class="shrink-0 min-lg:w-1/2">Some text</div>
+      <div class="prose prose-gray dark:prose-invert max-w-none leading-relaxed" v-html="settings?.aboutText"></div>
     </div>
   </UContainer>
 </template>
