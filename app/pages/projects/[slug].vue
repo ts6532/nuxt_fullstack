@@ -1,3 +1,52 @@
+<script setup lang="ts">
+import TextBlockViewer from "~/components/TextBlockViewer.vue";
+import ImageBlockViewer from "~/components/ImageBlockViewer.vue";
+import CarouselBlockViewer from "~/components/CarouselBlockViewer.vue";
+
+definePageMeta({
+  layout: "simple",
+});
+
+import type {
+  PopulatedProjectDTO,
+  PopulatedContentBlockUnion,
+} from "~~/server/models/project";
+
+const route = useRoute();
+const slug = computed(() => route.params.slug as string);
+
+const { data: project, error } = useFetch<PopulatedProjectDTO>(
+  `/api/projects/${slug.value}`,
+  { key: `project-${slug.value}`, getCachedData: useNuxtApp().$useClientCash },
+);
+
+const getBlockComponent = (type: string) => {
+  switch (type) {
+    case "text":
+      return TextBlockViewer;
+    case "image":
+      return ImageBlockViewer;
+    case "carousel":
+      return CarouselBlockViewer;
+    default:
+      return null;
+  }
+};
+
+const getBlockProps = (block: PopulatedContentBlockUnion) => {
+  switch (block.type) {
+    case "text":
+      return { content: block.content };
+    case "image":
+      return { image: block.image };
+    case "carousel":
+      return { images: block.images };
+    default:
+      return {};
+  }
+};
+</script>
+
 <template>
   <UContainer class="py-8">
     <div v-if="project">
@@ -52,56 +101,3 @@
     </div>
   </UContainer>
 </template>
-
-<script setup lang="ts">
-import TextBlockViewer from "~/components/TextBlockViewer.vue";
-import ImageBlockViewer from "~/components/ImageBlockViewer.vue";
-import CarouselBlockViewer from "~/components/CarouselBlockViewer.vue";
-
-definePageMeta({
-  layout: "simple",
-});
-
-import type {
-  PopulatedProjectDTO,
-  PopulatedContentBlockUnion,
-} from "~~/server/models/project";
-
-const route = useRoute();
-const slug = route.params.slug as string;
-
-const { data: project, error } = await useAsyncData<PopulatedProjectDTO>(
-  `project-${slug}`,
-  () => $fetch(`/api/projects/${slug}`),
-  {
-    getCachedData: (key, nuxtApp) =>
-      nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
-  },
-);
-
-const getBlockComponent = (type: string) => {
-  switch (type) {
-    case "text":
-      return TextBlockViewer;
-    case "image":
-      return ImageBlockViewer;
-    case "carousel":
-      return CarouselBlockViewer;
-    default:
-      return null;
-  }
-};
-
-const getBlockProps = (block: PopulatedContentBlockUnion) => {
-  switch (block.type) {
-    case "text":
-      return { content: block.content };
-    case "image":
-      return { image: block.image };
-    case "carousel":
-      return { images: block.images };
-    default:
-      return {};
-  }
-};
-</script>

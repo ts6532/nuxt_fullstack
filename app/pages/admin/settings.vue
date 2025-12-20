@@ -6,9 +6,9 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data, refresh } = useAsyncData<PopulatedSettingsDTO>("settings", () =>
-  $fetch("/api/settings"), {}
-);
+const { data, refresh } = useFetch("/api/settings", {
+  key: "settings",
+});
 
 const settings = ref<PopulatedSettingsDTO | null>(null);
 

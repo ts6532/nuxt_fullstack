@@ -1,12 +1,8 @@
 <script setup lang="ts">
-const { data: settings } = useAsyncData(
-  "settings",
-  () => $fetch("/api/settings"),
-  {
-    getCachedData: (key, nuxtApp) =>
-      nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
-  },
-);
+const { data: settings } = useFetch("/api/settings", {
+  key: "settings",
+  getCachedData: useNuxtApp().$useClientCash,
+});
 </script>
 
 <template>
@@ -21,7 +17,9 @@ const { data: settings } = useAsyncData(
     />
   </section>
 
-  <header class="px-6 py-4 border-b border-gray-200 sticky top-0 sm:static bg-white dark:bg-gray-900">
+  <header
+    class="px-6 py-4 border-b border-gray-200 sticky top-0 sm:static bg-white dark:bg-gray-900"
+  >
     <UContainer>
       <nav class="flex items-center gap-4 max-sm:justify-center">
         <NuxtLink to="/" class="font-bold">My Portfolio</NuxtLink>

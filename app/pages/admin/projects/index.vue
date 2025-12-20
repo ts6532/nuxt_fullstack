@@ -6,10 +6,9 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data: projects, refresh } = useAsyncData<PopulatedProjectDTO[]>(
-  "admin-projects",
-  () => $fetch("/api/admin/projects"),
-  {},
+const { data: projects, refresh } = useFetch<PopulatedProjectDTO[]>(
+  "/api/admin/projects",
+  { key: "admin-projects", getCachedData: useNuxtApp().$useClientCash },
 );
 
 const deleteProject = async (id: string) => {
@@ -63,10 +62,16 @@ const togglePublished = async (project: PopulatedProjectDTO) => {
             <p class="text-sm text-gray-600">{{ project.description }}</p>
             <div class="flex items-center gap-2 mt-1">
               <UIcon
-                :name="project.published ? 'i-heroicons-check-circle' : 'i-heroicons-x-circle'"
+                :name="
+                  project.published
+                    ? 'i-heroicons-check-circle'
+                    : 'i-heroicons-x-circle'
+                "
                 :class="project.published ? 'text-green-500' : 'text-gray-400'"
               />
-              <span class="text-sm">{{ project.published ? 'Опубликован' : 'Черновик' }}</span>
+              <span class="text-sm">{{
+                project.published ? "Опубликован" : "Черновик"
+              }}</span>
             </div>
           </div>
           <div class="flex gap-2">
@@ -90,11 +95,13 @@ const togglePublished = async (project: PopulatedProjectDTO) => {
             </UButton>
             <UButton
               @click="togglePublished(project)"
-              :icon="project.published ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+              :icon="
+                project.published ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'
+              "
               variant="outline"
               size="sm"
             >
-              {{ project.published ? 'Скрыть' : 'Опубликовать' }}
+              {{ project.published ? "Скрыть" : "Опубликовать" }}
             </UButton>
             <UButton
               @click="deleteProject(project._id)"

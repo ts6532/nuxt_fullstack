@@ -6,22 +6,10 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const {
-  data: filesList,
-  refresh,
-  pending: isLoading,
-} = useAsyncData(
-  "files",
-  async () => {
-    const response = await $fetch("/api/admin/uploads");
-
-    return response ?? [];
-  },
-  {
-    default: () => [],
-    watch: [],
-  },
-);
+const { data: filesList, refresh } = useFetch("/api/admin/uploads", {
+  key: "images",
+  getCachedData: useNuxtApp().$useClientCash,
+});
 
 const overlay = useOverlay();
 
