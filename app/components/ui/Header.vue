@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import SocialIcons from "~/components/ui/SocialIcons.vue";
+
 const { data: settings } = useFetch("/api/settings", {
   key: "settings",
   getCachedData: useNuxtApp().$useClientCash,
@@ -26,6 +28,8 @@ const { data: settings } = useFetch("/api/settings", {
         <NuxtLink to="/about" class="font-bold">About me</NuxtLink>
         <NuxtLink to="/contacts" class="font-bold">Contact</NuxtLink>
       </nav>
+
+      <SocialIcons class="max-sm:hidden" />
     </UContainer>
   </header>
 </template>

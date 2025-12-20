@@ -35,7 +35,13 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  modules: ["nuxt-auth-utils", "@nuxt/ui", "@nuxt/image", "nuxt-tiptap-editor"],
+  modules: [
+    "nuxt-auth-utils",
+    "@nuxt/ui",
+    "@nuxt/image",
+    "nuxt-tiptap-editor",
+    "@vueuse/nuxt",
+  ],
 
   experimental: {
     payloadExtraction: true,
