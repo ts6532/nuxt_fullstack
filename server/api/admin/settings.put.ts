@@ -6,12 +6,17 @@ interface UpdateSettingsBody {
   heroImage?: string;
   aboutImage?: string;
   aboutText?: string;
+  vkLink?: string;
+  instLink?: string;
+  beLink?: string;
 }
 
 async function validateFileId(
-  fileId: string,
+  fileId: string | undefined,
   fieldName: string,
 ): Promise<void> {
+  if (!fileId) return;
+
   if (!mongoose.Types.ObjectId.isValid(fileId)) {
     throw createError({
       statusCode: 400,
@@ -28,48 +33,25 @@ async function validateFileId(
   }
 }
 
-async function updateFileField(
-  settings: any,
-  fileId: string | undefined,
-  fieldName: string,
-): Promise<void> {
-  if (fileId) {
-    await validateFileId(fileId, fieldName);
-    settings[fieldName] = fileId;
-  }
-}
-
 export default defineEventHandler(async (event) => {
   await requireUserSession(event);
 
   try {
     const body: UpdateSettingsBody = await readBody(event);
-    const { heroImage, aboutImage, aboutText } = body;
+    const { heroImage, aboutImage } = body;
 
-    // Validate aboutText if provided
-    if (aboutText !== undefined && typeof aboutText !== "string") {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "Поле aboutText должно быть строкой",
-      });
-    }
+    await validateFileId(heroImage, "heroImage");
+    await validateFileId(aboutImage, "aboutImage");
 
-    // Find or create settings
     let settings = await Settings.findOne();
+
     if (!settings) {
       settings = new Settings();
     }
 
-    // Update fields
-    await updateFileField(settings, heroImage, "heroImage");
-    await updateFileField(settings, aboutImage, "aboutImage");
+    settings.overwrite({ ...body });
 
-    if (aboutText !== undefined) {
-      settings.aboutText = aboutText;
-    }
-
-    // Save settings
-    await settings.save();
+    await settings.save({});
 
     return {
       success: true,

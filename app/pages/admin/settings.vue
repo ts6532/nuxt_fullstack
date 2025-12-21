@@ -32,6 +32,9 @@ const saveSettings = async () => {
         heroImage: settings.value.heroImage?._id,
         aboutImage: settings.value.aboutImage?._id,
         aboutText: settings.value.aboutText,
+        vkLink: settings.value.vkLink,
+        instLink: settings.value.instLink,
+        beLink: settings.value.beLink,
       },
     });
 
@@ -77,7 +80,17 @@ const saveSettings = async () => {
         </div>
 
         <div class="flex flex-row flex-nowrap gap-6 my-6">
-          <div class="w-1/2"></div>
+          <div class="w-1/2">
+            <UFormField label="VK">
+              <UInput v-model="settings.vkLink" />
+            </UFormField>
+            <UFormField label="Instagram">
+              <UInput v-model="settings.instLink" />
+            </UFormField>
+            <UFormField label="Behans">
+              <UInput v-model="settings.beLink" />
+            </UFormField>
+          </div>
 
           <div class="w-1/2">
             <UFormField label="Текст на странице обо мне">
