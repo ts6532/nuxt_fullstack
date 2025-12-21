@@ -3,22 +3,21 @@ import { FileDTO } from "~~/server/models/file";
 import SettingsModel from "~~/server/models/settings";
 
 export default defineEventHandler(async (event) => {
+ 
   try {
     let settings = await SettingsModel.findOne()
       .populate<{ heroImage: FileDTO }>("heroImage")
       .populate<{ aboutImage: FileDTO }>("aboutImage")
-      .lean()
-      .exec();
+      .lean();
 
     if (!settings) {
       await SettingsModel.create({});
       settings = await SettingsModel.findOne()
         .populate<{ heroImage: FileDTO }>("heroImage")
         .populate<{ aboutImage: FileDTO }>("aboutImage")
-        .lean()
-        .exec();
+        .lean();
     }
-
+    
     return settings;
   } catch (error) {
     throw createError({

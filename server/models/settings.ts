@@ -9,6 +9,7 @@ export interface SettingsDTO {
   vkLink?: string;
   instLink?: string;
   beLink?: string;
+  pinLink?: string;
 }
 
 export interface PopulatedSettingsDTO {
@@ -19,6 +20,7 @@ export interface PopulatedSettingsDTO {
   vkLink?: string;
   instLink?: string;
   beLink?: string;
+  pinLink?: string;
 }
 
 const settingsSchema = new Schema<SettingsDTO>({
@@ -28,6 +30,7 @@ const settingsSchema = new Schema<SettingsDTO>({
   vkLink: { type: String },
   instLink: { type: String },
   beLink: { type: String },
+  pinLink: { type: String },
 });
 
 const SettingsModel = mongoose.model<SettingsDTO>("Settings", settingsSchema);

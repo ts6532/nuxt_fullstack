@@ -15,7 +15,7 @@ export default defineNitroPlugin(async () => {
   if (mongoose.connection.readyState === 0) {
     try {
       await mongoose.connect(uri, {});
-      console.log("[mongoose] Connected");
+      console.info("[mongoose] Connected");
     } catch (err) {
       console.error("[mongoose] Connection error", err);
     }

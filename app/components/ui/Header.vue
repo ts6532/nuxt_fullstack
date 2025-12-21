@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import SocialIcons from "~/components/ui/SocialIcons.vue";
 
-const { data: settings } = useFetch("/api/settings", {
-  key: "settings",
-  getCachedData: useNuxtApp().$useClientCash,
-});
+const { data: settings } = useNuxtData("settings");
 </script>
 
 <template>

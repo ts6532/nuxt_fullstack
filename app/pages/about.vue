@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const { data: settings } = useFetch("/api/settings", {
-  key: "settings",
-  getCachedData: useNuxtApp().$useClientCash,
-});
+
+const { data: settings } = useNuxtData("settings");
 </script>
 
 <template>
@@ -20,8 +18,9 @@ const { data: settings } = useFetch("/api/settings", {
       </div>
 
       <div
+        v-if="settings?.aboutText"
         class="prose prose-gray dark:prose-invert max-w-none leading-relaxed"
-        v-html="settings?.aboutText"
+        v-html="settings.aboutText"
       ></div>
     </div>
   </UContainer>

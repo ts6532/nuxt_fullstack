@@ -6,9 +6,7 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data, refresh } = useFetch("/api/settings", {
-  key: "settings",
-});
+const { data, refresh } = useFetch("/api/settings");
 
 const settings = ref<PopulatedSettingsDTO | null>(null);
 
@@ -35,6 +33,7 @@ const saveSettings = async () => {
         vkLink: settings.value.vkLink,
         instLink: settings.value.instLink,
         beLink: settings.value.beLink,
+        pinLink: settings.value.pinLink,
       },
     });
 
@@ -87,8 +86,11 @@ const saveSettings = async () => {
             <UFormField label="Instagram">
               <UInput v-model="settings.instLink" />
             </UFormField>
-            <UFormField label="Behans">
+            <UFormField label="Behance">
               <UInput v-model="settings.beLink" />
+            </UFormField>
+            <UFormField label="Pinteres">
+              <UInput v-model="settings.pinLink" />
             </UFormField>
           </div>
 
