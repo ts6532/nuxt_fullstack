@@ -4,7 +4,8 @@
       v-if="image?.path"
       :src="image.path"
       :alt="image.filename || 'Project image'"
-      class="w-full rounded-lg shadow-lg"
+      fit="contain"
+      class="max-h-[90vh] rounded-lg shadow-lg mx-auto"
       @click="useFullscreen({ image })"
     />
   </div>
