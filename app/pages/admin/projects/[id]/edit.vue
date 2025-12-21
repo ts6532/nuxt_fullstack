@@ -14,7 +14,7 @@ definePageMeta({
 
 const projectId = computed(() => route.params.id as string);
 
-const { data: loadedProject } = useFetch<PopulatedProjectDTO>(
+const { data: loadedProject } = await useFetch<PopulatedProjectDTO>(
   `/api/admin/projects/${projectId.value}`,
   { key: `project-${projectId.value}` },
 );
@@ -59,7 +59,7 @@ const saveProject = async () => {
       }
     });
 
-    await $fetch(`/api/admin/projects/${projectId}`, {
+    await $fetch(`/api/admin/projects/${projectId.value}`, {
       method: "PUT",
       body: {
         ...project,

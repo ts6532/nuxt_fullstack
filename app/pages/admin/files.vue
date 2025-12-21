@@ -6,9 +6,8 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data: filesList, refresh } = useFetch("/api/admin/uploads", {
+const { data: filesList, refresh } = await useFetch("/api/admin/uploads", {
   key: "images",
-  getCachedData: useNuxtApp().$useClientCash,
 });
 
 const overlay = useOverlay();
@@ -39,7 +38,7 @@ const deleteFile = async (fileId: string) => {
         icon: "i-heroicons-check-circle",
       });
 
-      await refresh();
+      refresh();
     }
   } catch (error) {
     console.error("Error deleting file:", error);

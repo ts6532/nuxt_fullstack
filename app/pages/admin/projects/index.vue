@@ -6,9 +6,9 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const { data: projects, refresh } = useFetch<PopulatedProjectDTO[]>(
+const { data: projects, refresh } = await useFetch<PopulatedProjectDTO[]>(
   "/api/admin/projects",
-  { key: "admin-projects", getCachedData: useNuxtApp().$useClientCash },
+  { key: "admin-projects" },
 );
 
 const deleteProject = async (id: string) => {
