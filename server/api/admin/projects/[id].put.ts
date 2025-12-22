@@ -32,9 +32,7 @@ export default defineEventHandler(async (event) => {
       data.slug = generateSlug(data.title);
     }
 
-    const project = await ProjectModel.findByIdAndUpdate(id, data, {
-      new: true,
-    });
+    const project = await ProjectModel.findOneAndReplace({ _id: id }, data, { returnOriginal: false });
 
     if (!project)
       throw createError({
