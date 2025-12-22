@@ -48,40 +48,23 @@ const getBlockProps = (block: PopulatedContentBlockUnion) => {
 </script>
 
 <template>
-  <UContainer class="py-8">
-    <div v-if="project">
-      <!-- Main Image -->
-      <div class="mb-8">
-        <NuxtImg
-          v-if="project.mainImage?.path"
-          :src="project.mainImage.path"
-          :alt="project.title"
-          class="w-full h-96 object-cover rounded-lg shadow-lg"
-        />
-      </div>
+  <div v-if="project">
+    <div class="max-sm:hidden">
+      <NuxtImg
+        v-if="project.mainImage?.path"
+        :src="project.mainImage.path"
+        :alt="project.title"
+        class="w-full max-h-96 object-cover"
+      />
+    </div>
 
-      <!-- Title -->
+    <UContainer class="max-sm:py-4 py-8">
       <h1 class="text-4xl font-bold mb-4">{{ project.title }}</h1>
 
-      <!-- Description -->
       <p v-if="project.description" class="text-lg text-gray-600 mb-6">
         {{ project.description }}
       </p>
 
-      <!-- Tags -->
-      <div v-if="project.tags && project.tags.length" class="mb-8">
-        <div class="flex flex-wrap gap-2">
-          <span
-            v-for="tag in project.tags"
-            :key="tag"
-            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-          >
-            {{ tag }}
-          </span>
-        </div>
-      </div>
-
-      <!-- Content Blocks -->
       <div class="space-y-8">
         <component
           v-for="(block, index) in project.content"
@@ -90,14 +73,6 @@ const getBlockProps = (block: PopulatedContentBlockUnion) => {
           v-bind="getBlockProps(block)"
         />
       </div>
-    </div>
-
-    <div v-else-if="error">
-      <p class="text-red-500">Ошибка загрузки проекта: {{ error.message }}</p>
-    </div>
-
-    <div v-else>
-      <p>Загрузка...</p>
-    </div>
-  </UContainer>
+    </UContainer>
+  </div>
 </template>
