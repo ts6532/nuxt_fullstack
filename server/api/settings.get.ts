@@ -2,7 +2,7 @@ import { createError, defineEventHandler } from "h3";
 import { FileDTO } from "~~/server/models/file";
 import SettingsModel from "~~/server/models/settings";
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
  
   try {
     let settings = await SettingsModel.findOne()

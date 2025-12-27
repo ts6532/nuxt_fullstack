@@ -3,21 +3,22 @@ import TextBlockViewer from "~/components/TextBlockViewer.vue";
 import ImageBlockViewer from "~/components/ImageBlockViewer.vue";
 import CarouselBlockViewer from "~/components/CarouselBlockViewer.vue";
 
-definePageMeta({
-  layout: "simple",
-});
-
 import type {
   PopulatedProjectDTO,
   PopulatedContentBlockUnion,
 } from "~~/server/models/project";
 
+definePageMeta({
+  layout: "simple",
+});
+
 const route = useRoute();
+
 const slug = computed(() => route.params.slug as string);
 
-const { data: project, error } = useFetch<PopulatedProjectDTO>(
+const { data: project } = useFetch<PopulatedProjectDTO>(
   `/api/projects/${slug.value}`,
-  { key: `project-${slug.value}`, getCachedData: useNuxtApp().$useClientCash },
+  { key: `project-${slug.value}` },
 );
 
 const getBlockComponent = (type: string) => {

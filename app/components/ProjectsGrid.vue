@@ -13,13 +13,6 @@
       </template>
     </MasonryWall>
 
-    <div
-      v-if="!hasMore && projects.length > 0"
-      class="text-center py-8 text-gray-500"
-    >
-      Больше проектов нет
-    </div>
-
     <div ref="sentinel" class="h-4"></div>
   </div>
 </template>
