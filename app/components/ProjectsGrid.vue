@@ -29,7 +29,7 @@ const sentinel = useTemplateRef<HTMLElement>("sentinel");
 
 const projects = ref<ProjectPreviewDTO[]>([]);
 
-const { pending: loading, error: fetchError } = useFetch<ProjectPreviewDTO[]>(
+const { pending: loading } = useFetch<ProjectPreviewDTO[]>(
   "/api/projects",
   {
     key: "projects-grid",
