@@ -70,8 +70,6 @@ const onSelect = () => {
           class="flex items-center justify-center h-full"
           @click="handleZoom($event)"
           :class="{
-            'cursor-zoom-in': !isZoomed,
-            'cursor-zoom-out': isZoomed,
             'transition-transform duration-200': true,
           }"
         >
@@ -79,6 +77,10 @@ const onSelect = () => {
             <NuxtImg
               :src="item.path"
               class="h-full"
+              :class="{
+                'cursor-zoom-in': !isZoomed,
+                'cursor-zoom-out': isZoomed,
+              }"
               :style="{
                 transform: isZoomed ? 'scale(1.7)' : 'scale(1)',
                 transformOrigin: transformOrigin,

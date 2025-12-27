@@ -5,7 +5,7 @@
       :src="image.path"
       :alt="image.filename || 'Project image'"
       fit="contain"
-      class="w-full max-h-[90vh] mx-auto object-contain"
+      class="w-full max-h-[90vh] mx-auto object-contain cursor-pointer"
       @click="useFullscreen({ image })"
     />
   </div>
