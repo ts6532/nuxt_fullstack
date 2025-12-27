@@ -60,7 +60,10 @@ const getBlockProps = (block: PopulatedContentBlockUnion) => {
     </div>
 
     <UContainer class="max-sm:py-4 py-8">
-      <h1 class="text-4xl font-bold mb-4">{{ project.title }}</h1>
+      <div class="flex items-center gap-4 mb-4">
+        <UButton color="neutral" variant="ghost" icon="i-heroicons-arrow-left" @click="navigateTo('/')"></UButton>
+        <h1 class="text-4xl font-bold leading-none">{{ project.title }}</h1>
+      </div>
 
       <p v-if="project.description" class="text-lg text-gray-600 mb-6">
         {{ project.description }}
