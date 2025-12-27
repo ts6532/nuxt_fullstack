@@ -11,7 +11,7 @@
       <NuxtImg
         :src="item.path"
         :alt="item.filename || 'Carousel image'"
-        class="w-full h-96 object-cover rounded-lg shadow-md"
+        class="w-full h-96 object-cover shadow-md cursor-pointer"
         @click="useFullscreen({ images, index })"
       />
     </UCarousel>

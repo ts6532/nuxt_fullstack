@@ -1,20 +1,13 @@
+<script setup lang="ts">
+import SocialIcons from "~/components/ui/SocialIcons.vue";
+</script>
+
 <template>
-  <footer class="footer">
-    <p class="footer__text">© {{ new Date().getFullYear() }} My Portfolio</p>
+  <footer class="px-6 pt-8 pb-12 border-t border-gray-200 text-center">
+    <p class="m-0 text-gray-500 text-sm">
+      © {{ new Date().getFullYear() }} My Portfolio
+    </p>
+
+    <SocialIcons />
   </footer>
 </template>
-
-<style scoped>
-.footer {
-  padding: 16px 24px;
-  border-top: 1px solid #e5e7eb;
-  text-align: center;
-}
-
-.footer__text {
-  margin: 0;
-  color: #6b7280;
-  font-size: 14px;
-}
-</style>
-

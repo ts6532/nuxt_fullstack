@@ -21,7 +21,6 @@ logs
 .kilocode
 .codeassistant
 .vscode
-.uploads
 
 # Local env files
 .env

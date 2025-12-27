@@ -6,22 +6,9 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const {
-  data: filesList,
-  refresh,
-  pending: isLoading,
-} = useAsyncData(
-  "files",
-  async () => {
-    const response = await $fetch("/api/admin/uploads");
-
-    return response ?? [];
-  },
-  {
-    default: () => [],
-    watch: [],
-  },
-);
+const { data: filesList, refresh } = await useFetch("/api/admin/uploads", {
+  key: "images",
+});
 
 const overlay = useOverlay();
 
@@ -51,7 +38,7 @@ const deleteFile = async (fileId: string) => {
         icon: "i-heroicons-check-circle",
       });
 
-      await refresh();
+      refresh();
     }
   } catch (error) {
     console.error("Error deleting file:", error);

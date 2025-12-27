@@ -12,12 +12,11 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const projectId = route.params.id as string;
+const projectId = computed(() => route.params.id as string);
 
-const { data: loadedProject } = await useAsyncData<PopulatedProjectDTO>(
-  `project-${projectId}`,
-  () => $fetch(`/api/admin/projects/${projectId}`),
-  {},
+const { data: loadedProject } = await useFetch<PopulatedProjectDTO>(
+  `/api/admin/projects/${projectId.value}`,
+  { key: `project-${projectId.value}` },
 );
 
 if (!loadedProject.value) {
@@ -60,7 +59,7 @@ const saveProject = async () => {
       }
     });
 
-    await $fetch(`/api/admin/projects/${projectId}`, {
+    await $fetch(`/api/admin/projects/${projectId.value}`, {
       method: "PUT",
       body: {
         ...project,

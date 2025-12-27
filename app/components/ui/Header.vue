@@ -1,12 +1,7 @@
 <script setup lang="ts">
-const { data: settings } = useAsyncData(
-  "settings",
-  () => $fetch("/api/settings"),
-  {
-    getCachedData: (key, nuxtApp) =>
-      nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
-  },
-);
+import SocialIcons from "~/components/ui/SocialIcons.vue";
+
+const { data: settings } = useNuxtData("settings");
 </script>
 
 <template>
@@ -21,11 +16,18 @@ const { data: settings } = useAsyncData(
     />
   </section>
 
-  <header class="px-6 py-4 border-b border-gray-200">
-    <nav class="flex items-center gap-4 max-sm:justify-center">
-      <NuxtLink to="/" class="font-bold">My Portfolio</NuxtLink>
-      <NuxtLink to="/about" class="font-bold">About me</NuxtLink>
-      <NuxtLink to="/contacts" class="font-bold">Contact</NuxtLink>
-    </nav>
+  <header
+    class="px-6 py-4 border-b border-gray-200 sticky top-0 sm:static bg-white dark:bg-gray-900"
+  >
+    <UContainer>
+      <div class="flex items-center justify-between">
+        <nav class="flex items-center gap-4 max-sm:justify-center">
+          <NuxtLink to="/home" class="text-gray-500 hover:text-gray-700" activeClass="font-bold text-gray-700">Projects</NuxtLink>
+          <NuxtLink to="/about" class="text-gray-500 hover:text-gray-700" activeClass="font-bold text-gray-700">About me</NuxtLink>
+        </nav>
+
+        <SocialIcons class="max-sm:hidden m-l-auto" />
+      </div>
+    </UContainer>
   </header>
 </template>

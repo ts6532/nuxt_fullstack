@@ -5,9 +5,9 @@ const emit = defineEmits<{
   close: [image?: FileDTO];
 }>();
 
-const { data } = useAsyncData("images", () => $fetch("/api/admin/uploads"), {
-  getCachedData: (key, nuxtApp) =>
-    nuxtApp.payload.data[key] ?? nuxtApp.static.data[key],
+const { data } = useFetch("/api/admin/uploads", {
+  key: "images",
+  getCachedData: useNuxtApp().$useClientCash,
 });
 
 const handleSelect = (image: FileDTO) => {

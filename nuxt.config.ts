@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     adminLogin: process.env.NUXT_ADMIN_LOGIN,
     adminPassword: process.env.NUXT_ADMIN_PASSWORD,
     blobToken: process.env.BLOB_READ_WRITE_TOKEN,
+    storageType: process.env.STORAGE_TYPE || "blob",
   },
 
   css: ["~/assets/css/main.css"],
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
     storage: {
       uploads: {
         driver: "fs",
-        base: "./uploads",
+        base: "./public/uploads",
       },
     },
   },
@@ -34,7 +35,13 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
-  modules: ["nuxt-auth-utils", "@nuxt/ui", "@nuxt/image", "nuxt-tiptap-editor"],
+  modules: [
+    "nuxt-auth-utils",
+    "@nuxt/ui",
+    "@nuxt/image",
+    "nuxt-tiptap-editor",
+    "@vueuse/nuxt",
+  ],
 
   experimental: {
     payloadExtraction: true,

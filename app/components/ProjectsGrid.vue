@@ -13,13 +13,6 @@
       </template>
     </MasonryWall>
 
-    <div
-      v-if="!hasMore && projects.length > 0"
-      class="text-center py-8 text-gray-500"
-    >
-      Больше проектов нет
-    </div>
-
     <div ref="sentinel" class="h-4"></div>
   </div>
 </template>
@@ -36,7 +29,7 @@ const sentinel = useTemplateRef<HTMLElement>("sentinel");
 
 const projects = ref<ProjectPreviewDTO[]>([]);
 
-const { pending: loading, error: fetchError } = useFetch<ProjectPreviewDTO[]>(
+const { pending: loading } = useFetch<ProjectPreviewDTO[]>(
   "/api/projects",
   {
     key: "projects-grid",
