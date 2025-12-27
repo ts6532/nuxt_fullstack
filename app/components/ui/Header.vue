@@ -22,8 +22,8 @@ const { data: settings } = useNuxtData("settings");
     <UContainer>
       <div class="flex items-center justify-between">
         <nav class="flex items-center gap-4 max-sm:justify-center">
-          <NuxtLink to="/" class="font-bold">Projects</NuxtLink>
-          <NuxtLink to="/about" class="font-bold">About me</NuxtLink>
+          <NuxtLink to="/home" class="text-gray-500 hover:text-gray-700" activeClass="font-bold text-gray-700">Projects</NuxtLink>
+          <NuxtLink to="/about" class="text-gray-500 hover:text-gray-700" activeClass="font-bold text-gray-700">About me</NuxtLink>
         </nav>
 
         <SocialIcons class="max-sm:hidden m-l-auto" />
