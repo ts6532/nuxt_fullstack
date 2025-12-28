@@ -11,16 +11,18 @@ export default defineEventHandler(async () => {
     console.log("No settings", error);
   }
 
-  try {
-    console.log("Creating Settings");
-    settings = new SettingsModel({});
-    await settings.save()
-  } catch (error) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: "Ошибка при создании настроек",
-      data: error,
-    });
+  if (!settings) {
+    try {
+      console.log("Creating Settings");
+      settings = new SettingsModel({});
+      await settings.save();
+    } catch (error) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Ошибка при создании настроек",
+        data: error,
+      });
+    }
   }
 
   try {
