@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, "id");
 
     if (!id)
-      throw createError({ statusCode: 400, statusMessage: "ID required" });
+      throw createError({ statusCode: 400, message: "ID required" });
 
     const body = await readBody<UpdateProjectDTO>(event);
 
@@ -37,14 +37,14 @@ export default defineEventHandler(async (event) => {
     if (!project)
       throw createError({
         statusCode: 404,
-        statusMessage: "Project not found",
+        message: "Project not found",
       });
 
     return project;
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при обновлении проекта",
+      message: "Ошибка при обновлении проекта",
       data: error,
     });
   }

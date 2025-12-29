@@ -6,7 +6,7 @@ import type { FileDTO } from "~~/server/models/file";
 export default defineEventHandler(async (event) => {
   try {
     const slug = getRouterParam(event, 'slug');
-    if (!slug) throw createError({ statusCode: 400, statusMessage: 'Slug required' });
+    if (!slug) throw createError({ statusCode: 400, message: 'Slug required' });
 
     const project = await ProjectModel.findOne({ slug, published: true })
       .populate<{ mainImage: FileDTO }>('mainImage')
@@ -16,13 +16,13 @@ export default defineEventHandler(async (event) => {
       .lean()
       .exec();
 
-    if (!project) throw createError({ statusCode: 404, statusMessage: 'Project not found' });
+    if (!project) throw createError({ statusCode: 404, message: 'Project not found' });
 
     return project as PopulatedProjectDTO;
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при получении проекта",
+      message: "Ошибка при получении проекта",
       data: error,
     });
   }

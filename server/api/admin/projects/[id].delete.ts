@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, "id");
 
     if (!id)
-      throw createError({ statusCode: 400, statusMessage: "ID required" });
+      throw createError({ statusCode: 400, message: "ID required" });
 
     await ProjectModel.findByIdAndDelete(id);
 
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при удалении проекта",
+      message: "Ошибка при удалении проекта",
       data: error,
     });
   }

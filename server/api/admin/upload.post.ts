@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (!file) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Фиал не валиден или его нет",
+      message: "Фиал не валиден или его нет",
     });
   }
 
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при конвертации фаила",
+      message: "Ошибка при конвертации фаила",
     });
   }
 
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Не удалось сохранить файлы в хранилище",
+      message: "Не удалось сохранить файлы в хранилище",
       data: error,
     });
   }
@@ -64,7 +64,7 @@ export default defineEventHandler(async (event) => {
 
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при сохранении метаданных фаила в базу данных",
+      message: "Ошибка при сохранении метаданных фаила в базу данных",
       data: error,
     });
   }

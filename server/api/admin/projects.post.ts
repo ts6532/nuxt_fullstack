@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при создании проекта",
+      message: "Ошибка при создании проекта",
       data: error,
     });
   }

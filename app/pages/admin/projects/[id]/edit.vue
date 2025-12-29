@@ -20,7 +20,7 @@ const { data: loadedProject } = await useFetch<PopulatedProjectDTO>(
 );
 
 if (!loadedProject.value) {
-  throw createError({ statusCode: 404, statusMessage: "Project not found" });
+  throw createError({ statusCode: 404, message: "Project not found" });
 }
 
 const projectData = loadedProject.value;
