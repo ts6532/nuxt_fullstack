@@ -20,7 +20,7 @@ async function validateFileId(
   if (!mongoose.Types.ObjectId.isValid(fileId)) {
     throw createError({
       statusCode: 400,
-      statusMessage: `Некорректный ID файла для ${fieldName}`,
+      message: `Некорректный ID файла для ${fieldName}`,
     });
   }
 
@@ -28,7 +28,7 @@ async function validateFileId(
   if (!file) {
     throw createError({
       statusCode: 404,
-      statusMessage: `Файл с ID ${fileId} не найден для поля ${fieldName}`,
+      message: `Файл с ID ${fileId} не найден для поля ${fieldName}`,
     });
   }
 }
@@ -61,14 +61,14 @@ export default defineEventHandler(async (event) => {
   } catch (error: unknown) {
     const statusCode =
       error instanceof Error && "statusCode" in error ? error.statusCode : 500;
-    const statusMessage =
-      error instanceof Error && "statusMessage" in error
-        ? error.statusMessage
+    const message =
+      error instanceof Error && "message" in error
+        ? error.message
         : "Ошибка при обновлении настроек";
 
     throw createError({
       statusCode: statusCode as number,
-      statusMessage: statusMessage as string,
+      message: message as string,
       data: error instanceof Error ? error.message : String(error),
     });
   }

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при получении файлов из базы данных",
+      message: "Ошибка при получении файлов из базы данных",
       data: error,
     });
   }

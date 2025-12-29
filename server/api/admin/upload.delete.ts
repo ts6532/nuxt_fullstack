@@ -12,7 +12,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   if (!id || typeof id !== "string") {
     throw createError({
       statusCode: 400,
-      statusMessage: "File ID is required",
+      message: "File ID is required",
     });
   }
 
@@ -20,7 +20,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid file ID format",
+      message: "Invalid file ID format",
     });
   }
 
@@ -31,7 +31,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Failed to query database",
+      message: "Failed to query database",
       data: error,
     });
   }
@@ -39,7 +39,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   if (!fileRecord) {
     throw createError({
       statusCode: 404,
-      statusMessage: "File not found",
+      message: "File not found",
     });
   }
 
@@ -58,7 +58,7 @@ export default defineEventHandler<{ query: { id: string } }>(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Failed to delete file record from database",
+      message: "Failed to delete file record from database",
       data: error,
     });
   }

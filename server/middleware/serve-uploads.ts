@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     if (!file) {
       throw createError({
         statusCode: 404,
-        statusMessage: "File not found",
+        message: "File not found",
       });
     }
 
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Failed to serve file",
+      message: "Failed to serve file",
       data: error,
     });
   }

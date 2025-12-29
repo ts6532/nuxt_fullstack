@@ -19,7 +19,7 @@ export default defineEventHandler(async () => {
     } catch (error) {
       throw createError({
         statusCode: 500,
-        statusMessage: "Ошибка при создании настроек",
+        message: "Ошибка при создании настроек",
         data: error,
       });
     }
@@ -34,7 +34,7 @@ export default defineEventHandler(async () => {
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: "Ошибка при получении настроек",
+      message: "Ошибка при получении настроек",
       data: error,
     });
   }
